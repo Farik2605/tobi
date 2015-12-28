@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+	<modules>
+        <HN_Pin>
+            <version>2.0.6</version>
+        </HN_Pin>
+    </modules>
+    
+	<global>
+        
+		<blocks>
+             <pin>
+                <class>HN_Pin_Block</class>
+             </pin>
+             
+         <adminhtml>
+            	<rewrite>
+					<sales_order_grid>HN_Pin_Block_Adminhtml_Sales_Order_Grid</sales_order_grid>
+				</rewrite>   
+         </adminhtml>
+                       
+        </blocks>
+		<helpers>
+             <pin>
+                <class>HN_Pin_Helper</class>
+             </pin>
+        </helpers>
+        
+		<models>
+            <pin>
+                <class>HN_Pin_Model</class>
+                <resourceModel>pin_mysql4</resourceModel>
+            </pin>
+            <pin_mysql4>
+                <class>HN_Pin_Model_Mysql4</class>
+                <entities>
+                    <pin>
+                        <table>pin</table>
+                    </pin>
+                     <orderpin>
+                        <table>orderpin</table>
+                    </orderpin>
+                     <orderpin_status>
+                        <table>orderpin_status</table>
+                    </orderpin_status>
+                    <ispinproduct>
+                        <table>ispinproduct</table>
+                    </ispinproduct>
+                    <itempinbuy>
+                        <table>itempinbuy</table>
+                    </itempinbuy>
+                    <orderpinbuy>
+                        <table>orderpinbuy</table>
+                    </orderpinbuy>
+                </entities>
+            </pin_mysql4>
+        </models>
+        
+        <resources>
+            <pin_setup>
+                <setup>
+                    <module>HN_Pin</module>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </pin_setup>
+            <pin_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </pin_write>
+            <pin_read>
+                <connection>
+                    <use>core_read</use>
+                </connection>
+            </pin_read>
+        </resources>	
+       
+     <template>
+            <email>
+               <pin_information_template>
+                   <label>Game licenses information</label>
+                   <file>pin_info.html</file>
+                   <type>html</type>
+               </pin_information_template>
+               
+               <low_pinstock_template>
+                   <label>PIN Low stock notification</label>
+                   <file>pin_low_stock_notification.html</file>
+                   <type>html</type>
+               </low_pinstock_template>
+            </email>
+        </template>
+		<events>
+          <customer_save_after>
+          <observers>
+                    <pin_observer>
+                        <class>pin/observer</class>
+                        <method>customerGroupChangeListener</method>
+                    </pin_observer>
+                </observers>
+          </customer_save_after>
+          
+            <sales_order_item_save_commit_after>
+                <observers>
+                    <pin_observer>
+                        <class>pin/observer</class>
+                        <method>savePinOrderItem</method>
+                    </pin_observer>
+                </observers>
+            </sales_order_item_save_commit_after>
+            <sales_order_save_commit_after>
+                <observers>
+                    <pin_observer>
+                        <class>pin/observer</class>
+                        <method>orderCommitListener</method>
+                    </pin_observer>
+                </observers>
+            </sales_order_save_commit_after>
+         </events>
+	</global>
+	
+	
+    <frontend>
+        <routers>
+            <pin>
+                <use>standard</use>
+                <args>
+                    <module>HN_Pin</module>
+                    <frontName>pin</frontName>
+                </args>
+            </pin>
+            
+        </routers>
+        <layout>
+            <updates>
+                <pin>
+                    <file>hn_pin.xml</file>
+                </pin>
+            </updates>
+        </layout>
+    </frontend>
+	
+
+
+    <admin>
+        <routers>
+            <pin>
+                <use>admin</use>
+                <args>
+                    <module>HN_Pin</module>
+                    <frontName>pin</frontName>
+                </args>
+            </pin>
+        </routers>
+    </admin>
+
+	<adminhtml>
+	        <menu>
+            <pin module="pin">
+                <title>Pin management</title>
+                <sort_order>171</sort_order>
+                <children>
+                    <items module="pin">
+                        <title>Manage PIN</title>
+                        <sort_order>0</sort_order>
+                        <action>pin/adminhtml_pin/index</action>
+                    </items>
+                    <order module="pin">
+                        <title>Manage PIN Order</title>
+                        <sort_order>0</sort_order>
+                        <action>pin/adminhtml_order/index</action>
+                    </order>
+                    <pinproduct translate="title" module="catalog">
+                            <title>Manage Pin Product</title>
+                            <action>pin/adminhtml_pin/pinproduct/</action>
+                        </pinproduct>
+                 </children>
+            </pin>
+        </menu>
+			<layout>
+            <updates>
+                <pin>
+                    <file>hn_pin.xml</file>
+                </pin>
+            </updates>
+        </layout>
+       
+         <acl>
+            <resources>
+                 <all>
+                    <title>Allow Everything</title>
+                </all>
+                <admin>
+                    <children>
+                        <system>
+                            <children>
+                                <config>
+                                    <children>
+                                        <pin translate="title" module="pin">
+                                            <title>Game license delivery Settings</title>
+                                        </pin>
+                                    </children>
+                                </config>
+                            </children>
+                            </system>
+                    </children>
+                     
+                        
+                </admin>
+            </resources>
+        </acl>
+	</adminhtml>
+	<default>	
+		<pin>
+			<general>
+				<change_status>1</change_status>
+				<email_sender>sales</email_sender>
+				<qty_sync>1</qty_sync>
+				<delivery_confirmed>0</delivery_confirmed>
+				<low_stock_notification>1</low_stock_notification>
+				<low_stock_number>10</low_stock_number>
+				<show_pin_successpage>1</show_pin_successpage>
+			</general>			
+		</pin>
+	
+	</default>
+	<crontab>
+        <jobs>
+            <notification_low_pin>
+                <schedule>
+                    <cron_expr>*/5 * * * *</cron_expr>
+                </schedule>
+                <run>
+                    <model>pin/observer::scheduledSend</model>
+                </run>
+            </notification_low_pin>
+        </jobs>
+    </crontab>
+
+</config>

@@ -1,0 +1,29 @@
+<?php
+
+$keys = $this->getKeys();
+$preOrdersLeft = $this->getTotalPreOrders();
+
+if (count($keys) > 0) {
+
+    if($preOrdersLeft == 0) {
+
+        echo $emailTemplateVariables['email_text'] = "Your recent order has been completed. Your keys are shown below for your reference: <br/><br/>";
+
+    }else{
+
+        echo $emailTemplateVariables['email_text'] = "Your recent order has been partially completed. Your keys are shown below for your reference next keys: " . $preOrdersLeft . " are going to be sent ASAP. <br/><br/>";
+    }
+
+    foreach ($keys as $item) {
+
+      echo '<b>'. $item['item']->getData('name') . ' </b> <br />';
+
+        foreach ($item['codes'] as $code) {
+
+            $emailTemplateVariables['text_code'] = $code->isImage() ? $code->getFileName() : $code->getCode();
+            echo $emailTemplateVariables['text_code'] . '<br/>';
+        }
+
+    }
+}
+

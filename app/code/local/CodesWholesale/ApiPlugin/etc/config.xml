@@ -1,0 +1,204 @@
+<?xml version="1.0"?>
+<config>
+
+    <modules>
+
+        <CodesWholesale_ApiPlugin>
+            <version>1.0.0</version>
+        </CodesWholesale_ApiPlugin>
+
+    </modules>
+
+    <global>
+
+        <helpers>
+            <apiplugin>
+                <class>CodesWholesale_ApiPlugin_Helper</class>
+            </apiplugin>
+        </helpers>
+
+        <blocks>
+            <apiplugin>
+                <class>CodesWholesale_ApiPlugin_Block</class>
+            </apiplugin>
+        </blocks>
+
+        <models>
+            <apiplugin>
+                <class>CodesWholesale_ApiPlugin_Model</class>
+            </apiplugin>
+        </models>
+
+        <resources>
+
+            <apiplugin_setup>
+                <setup>
+                    <module>CodesWholesale_ApiPlugin</module>
+                    <class>CodesWholesale_ApiPlugin_Model_Resource_Eav_Mysql4_Setup</class>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </apiplugin_setup>
+
+            <apiplugin_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </apiplugin_write>
+
+            <apiplugin_read>
+                <connection>
+                    <use>core_read</use>
+                </connection>
+            </apiplugin_read>
+
+        </resources>
+
+        <template>
+            <email>
+                <send_cwcode_mail>
+                    <label>Code Mail</label>
+                    <file>cw_send_code_mail.html</file>
+                    <type>html</type>
+                </send_cwcode_mail>
+            </email>
+        </template>
+
+        <template>
+            <email>
+                <send_cwpreorder_mail>
+                    <label>PreOrder Mail</label>
+                    <file>cw_send_preorder_mail.html</file>
+                    <type>html</type>
+                </send_cwpreorder_mail>
+            </email>
+        </template>
+
+        <template>
+            <email>
+                <send_admin_error_mail>
+                    <label>Error Mail</label>
+                    <file>cw_admin_error_mail.html</file>
+                    <type>html</type>
+                </send_admin_error_mail>
+            </email>
+        </template>
+
+        <template>
+            <email>
+                <send_admin_info_mail>
+                    <label>Info Mail</label>
+                    <file>cw_info_admin_mail.html</file>
+                    <type>html</type>
+                </send_admin_info_mail>
+            </email>
+        </template>
+
+        <template>
+            <email>
+                <send_admin_info_preorder_mail>
+                    <label>Info About PreOrder Mail</label>
+                    <file>cw_notify_about_preorder.html</file>
+                    <type>html</type>
+                </send_admin_info_preorder_mail>
+            </email>
+        </template>
+
+    </global>
+
+    <frontend>
+
+        <routers>
+            <cw_controller>
+                <use>standard</use>
+                <args>
+                    <module>CodesWholesale_ApiPlugin</module>
+                    <frontName>codeswholesale</frontName>
+                </args>
+            </cw_controller>
+        </routers>
+
+        <events>
+
+        <cw_send_pre_order_keys>
+            <observers>
+                <apiplugin_send_pre_order_after_recieve>
+                    <type>singleton</type>
+                    <class>apiplugin/cwSendPreOrderObserver</class>
+                    <method>sendPreOrderKeys</method>
+                </apiplugin_send_pre_order_after_recieve>
+            </observers>
+        </cw_send_pre_order_keys>
+
+        </events>
+
+    </frontend>
+
+    <adminhtml>
+
+        <layout>
+            <updates>
+                <apiplugin>
+                    <file>apiplugin.xml</file>
+                </apiplugin>
+            </updates>
+        </layout>
+
+        <events>
+            <catalog_product_save_after>
+                <observers>
+                    <apiplugin_save_product_data>
+                        <type>singleton</type>
+                        <class>apiplugin/observer</class>
+                        <method>saveProductTabData</method>
+                    </apiplugin_save_product_data>
+                </observers>
+            </catalog_product_save_after>
+
+            <sales_order_save_commit_after>
+                <observers>
+                    <order_status_change>
+                        <type>singleton</type>
+                        <class>apiplugin/cwOrderObserver</class>
+                        <method>statusChange</method>
+                    </order_status_change>
+                </observers>
+            </sales_order_save_commit_after>
+
+            <cw_send_keys_after_buy>
+                <observers>
+                    <apiplugin_send_keys_after_buy>
+                        <type>singleton</type>
+                        <class>apiplugin/cwSendKeysObserver</class>
+                        <method>sendKeys</method>
+                    </apiplugin_send_keys_after_buy>
+                </observers>
+            </cw_send_keys_after_buy>
+
+        </events>
+
+        <acl>
+            <resources>
+                <admin>
+                    <children>
+                        <system>
+                            <children>
+                                <config>
+                                    <children>
+                                        <apiplugin_connection>
+                                            <title>Connection status</title>
+                                            <sort_order>2</sort_order>
+                                        </apiplugin_connection>
+                                    </children>
+                                </config>
+                            </children>
+                        </system>
+                    </children>
+                </admin>
+            </resources>
+        </acl>
+
+    </adminhtml>
+
+</config> 

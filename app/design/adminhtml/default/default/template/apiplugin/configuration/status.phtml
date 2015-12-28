@@ -1,0 +1,186 @@
+
+
+<div id="grid_tab_content">
+    <div id="grid_tab_ordered_products_content">
+        <div class="grid np">
+            <table cellspacing="0" style="border:0;" id="productsOrderedGrid_table">
+                <colgroup>
+                    <col>
+                    <col width="120">
+                    <col width="120">
+                </colgroup>
+                <thead>
+                <tr class="headings">
+                    <th class=" no-link"><span class="nobr">Connection Status</span></th>
+                </tr>
+                </thead>
+                <tbody>
+                <?php $this->connectToCw() ?>
+                <td class="text-info a-left" colspan="100">
+                    <?php if(!$this->getData('cwError') == null && $this->getData('cwError')->getMessage()) { ?>
+                    <strong>Status:</strong>Disconnected<br/>
+                    <?php } else { ?>
+                        <strong>Account Name:</strong>   <?php echo $this->getData('cwAccount')->getFullName(); ?><br/>
+                        <strong>E-mail:</strong>    <?php echo $this->getData('cwAccount')->getEmail(); ?><br/>
+                        <strong>Current Balance:</strong>   <?php echo number_format($this->getData('cwAccount')->getCurrentBalance()) . "€"; ?><br/>
+                        <strong>Status:</strong>Connected<br/>
+                    <?php } ?>
+                </td>
+                </tbody>
+            </table>
+        </div>
+        <script type="text/javascript">
+            //<![CDATA[
+            productsOrderedGridJsObject = new varienGrid('productsOrderedGrid', 'http://192.168.1.18:5544/magento/index.php/admin/dashboard/index/key/0fd18d16efc93bb82f90c6eb4a5830cd/', 'page', 'sort', 'dir', 'filter');
+            productsOrderedGridJsObject.useAjax = '';
+            productsOrderedGridJsObject.rowClickCallback = openGridRow;
+            //]]>
+        </script>
+    </div>
+    <div id="grid_tab_reviewed_products_content" style="display: none;"></div>
+    <div id="grid_tab_new_customers_content" style="display: none;"></div>
+    <div id="grid_tab_customers_content" style="display: none;"></div>
+</div>
+<br/>
+
+
+
+<form id="<?php echo $this->getForm()->getId(); ?>" action="<?php echo $this->getForm()->getData('action'); ?>" method="post" enctype="multipart/form-data">
+
+
+    <?php $codeswholesaleEnvironment = Mage::getStoreConfig('apiplugin_connection/apiplugin_group/apiplugin_env'); ?>
+    <?php $codeswholesaleSpreadType = Mage::getStoreConfig('apiplugin_connection/apiplugin_group/apiplugin_spread_type'); ?>
+
+    <input name="form_key" value="<?php echo $this->getFormKey(); ?>" type="hidden"/>
+    <div class="entry-edit">
+        <div class="section-config active">
+            <div class="entry-edit-head collapseable"><a id="apiplugin_section_apiplugin_group-head" href="#" onclick="Fieldset.toggleCollapse('apiplugin_section_apiplugin_group', 'http://192.168.1.18:5544/magento/index.php/admin/system_config/edit/section/apiplugin_connection/key/631783ce064ec7f6bcccab81ef84b16e/'); return false;" class="open">CodesWholesale Settings</a></div>
+            <input id="apiplugin_section_apiplugin_group-state" name="config_state[apiplugin_section_apiplugin_group]" type="hidden" value="1">
+
+            <fieldset class="config collapapipluginle" id="apiplugin_section_apiplugin_group">
+             <legend>CodesWholesale Group</legend>
+                <table cellspacing="0" class="form-list">
+                    <colgroup class="label"></colgroup>
+                    <colgroup class="value"></colgroup>
+                    <colgroup class="scope-label"></colgroup>
+                    <colgroup class=""></colgroup>
+                    <tbody>
+
+                    <tr id="row_apiplugin_section_apiplugin_group_apiplugin_env">
+                        <td class="label"><label for="apiplugin_section_apiplugin_group_apiplugin_env">Environment:</label></td>
+                        <td class="value">
+                            <select id="apiplugin_section_apiplugin_group_apiplugin_env" name="groups[apiplugin_group][fields][apiplugin_env][value]">
+                                <option value="0" <?php if($codeswholesaleEnvironment == 0): ?> selected="selected"<?php endif; ?>>Sandbox</option>
+                                <option value="1" <?php if($codeswholesaleEnvironment == 1): ?> selected="selected"<?php endif; ?>>Live</option>
+                            </select>
+                        </td>
+                    </tr>
+
+                    <tr id="row_apiplugin_section_apiplugin_group_apiplugin_client_id">
+                        <td class="label"><label for="apiplugin_section_apiplugin_group_apiplugin_client_id">Client ID:</label></td>
+                        <td class="value"><input id="apiplugin_section_apiplugin_group_apiplugin_client_id" name="groups[apiplugin_group][fields][apiplugin_client_id][value]" value="<?php echo $codeswholesaleClientId = Mage::getStoreConfig('apiplugin_connection/apiplugin_group/apiplugin_client_id'); ?>" class=" input-text" type="text">
+                            <i>Get client id from <a href="https://app.codeswholesale.com/#/sign-in">Codeswholesale</a> platform under<br/> "Web Api" tab.</i>
+                        </td>
+                    </tr>
+
+                    <tr id="row_apiplugin_section_apiplugin_group_apiplugin_client_secret">
+                        <td class="label"><label for="apiplugin_section_apiplugin_group_apiplugin_client_secret">Client Secret:</label></td>
+                        <td class="value"><input id="apiplugin_section_apiplugin_group_apiplugin_client_secret" name="groups[apiplugin_group][fields][apiplugin_client_secret][value]" value="<?php echo $codeswholesaleClientSecret = Mage::getStoreConfig('apiplugin_connection/apiplugin_group/apiplugin_client_secret'); ?>" class=" input-text" type="text">
+                            <i>Get client secret from <a href="https://app.codeswholesale.com/#/sign-in">Codeswholesale</a> platform under "Web Api" tab.</i>
+                        </td>
+                    </tr>
+
+                    <tr id="row_apiplugin_section_apiplugin_group_apiplugin_balance">
+                        <td class="label"><label for="apiplugin_section_apiplugin_group_apiplugin_balance">Balance Value:</label></td>
+                        <td class="value"><input id="apiplugin_section_apiplugin_group_apiplugin_balance" name="groups[apiplugin_group][fields][apiplugin_balance][value]" value="<?php echo $codeswholesaleBalance = Mage::getStoreConfig('apiplugin_connection/apiplugin_group/apiplugin_balance'); ?>" class=" input-text" type="text"><br/>
+                            <i>If your balance will reach under this value you will receive an email with warning.</i>
+                        </td>
+                    </tr>
+
+                    <tr id="row_apiplugin_section_apiplugin_group_apiplugin_spread_type">
+                        <td class="label"><label for="apiplugin_section_apiplugin_group_apiplugin_spread_type">Spread Type:</label></td>
+                        <td class="value">
+                            <select id="apiplugin_section_apiplugin_group_apiplugin_spread_type" name="groups[apiplugin_group][fields][apiplugin_spread_type][value]">
+
+                                <option value="0" <?php if($codeswholesaleSpreadType == 0) echo 'selected="selected"'; ?>>Flat</option>
+                                <option value="1" <?php if($codeswholesaleSpreadType == 1) echo 'selected="selected"'; ?>>Percent</option>
+
+                            </select>
+                            <i>Select your spread type.</i>
+                        </td>
+                    </tr>
+<style>
+    input.validation-failed {
+        background: #fef0ed;
+        border: 1px dashed #d6340e!important;
+    }
+</style>
+                    <tr id="row_apiplugin_section_apiplugin_group_apiplugin_spread_value">
+                        <td class="label"><label for="apiplugin_section_apiplugin_group_apiplugin_spread_value">Spread Value:</label></td>
+                        <td class="value"><input id="apiplugin_section_apiplugin_group_apiplugin_spread_value" name="groups[apiplugin_group][fields][apiplugin_spread_value][value]" value="<?php echo $codeswholesaleSpreadValue = str_replace(',', '.', Mage::getStoreConfig('apiplugin_connection/apiplugin_group/apiplugin_spread_value')); ?>" class="input-text required-entry validate-zero-or-greater" type="text">
+                            <i>Declare your spread for each product.</i>
+                        </td>
+                    </tr>
+
+                    </tbody>
+                </table>
+            </fieldset>
+        </div>
+        </div>
+</form>
+
+
+<script type="text/javascript">
+    //< ![CDATA[
+    var myForm= new VarienForm('<?php echo $this->getForm()->getId(); ?>', true);
+    //]]>
+</script>
+
+<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
+<script type="text/javascript">
+
+    var j = jQuery.noConflict();
+
+    j(document).ready(function() {
+
+        function collapseCredentials() {
+
+            var chosenEnvIndex = parseInt(j("#apiplugin_section_apiplugin_group_apiplugin_env").val());
+
+            if(chosenEnvIndex == 0) {
+                j("#row_apiplugin_section_apiplugin_group_apiplugin_client_id, #row_apiplugin_section_apiplugin_group_apiplugin_client_secret").hide();
+            } else {
+                j("#row_apiplugin_section_apiplugin_group_apiplugin_client_id, #row_apiplugin_section_apiplugin_group_apiplugin_client_secret").show();
+            }
+
+        }
+
+        j("#apiplugin_section_apiplugin_group_apiplugin_env").change(function(){
+            j("#row_apiplugin_section_apiplugin_group_apiplugin_client_id, #row_apiplugin_section_apiplugin_group_apiplugin_client_secret").val("");
+            collapseCredentials();
+        });
+
+        collapseCredentials();
+    });
+
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

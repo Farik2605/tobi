@@ -1,0 +1,213 @@
+<?xml version="1.0"?>
+	<!--
+		/** * Magento * * NOTICE OF LICENSE * * This source file is subject to
+		the Open Software License (OSL 3.0) * that is bundled with this
+		package in the file LICENSE.txt. * It is also available through the
+		world-wide-web at this URL: *
+		http://opensource.org/licenses/osl-3.0.php * If you did not receive a
+		copy of the license and are unable to * obtain it through the
+		world-wide-web, please send an email * to license@magentocommerce.com
+		so we can send you a copy immediately. * * @category Mage * @package
+		AW_Blog * @copyright Copyright (c) 2004-2007 Irubin Consulting Inc.
+		DBA Varien (http://www.varien.com) * @license
+		http://opensource.org/licenses/osl-3.0.php Open Software License (OSL
+		3.0) */
+	-->
+<config>
+	<tabs>
+		<hn module="pin">
+			<label>Hungnam</label>
+			<sort_order>120</sort_order>
+		</hn>
+	</tabs>
+
+
+	<sections>
+		<pin translate="label" module="pin">
+			<label>Game license delivery</label>
+			<tab>hn</tab>
+		
+			<sort_order>100</sort_order>
+			<show_in_default>1</show_in_default>
+			<show_in_website>1</show_in_website>
+			
+			<groups>
+				<general translate="label">
+					<label>Game license delivery Settings</label>
+					<frontend_type>text</frontend_type>
+					<sort_order>10</sort_order>
+					<show_in_default>1</show_in_default>
+					<show_in_website>1</show_in_website>
+					
+					<fields>
+						
+                        
+<!--                          <change_status translate="label"> -->
+<!--                             <label>Change status to used and send email to customer when payment completion</label> -->
+<!--                             <frontend_type>select</frontend_type> -->
+<!--                             <source_model>adminhtml/system_config_source_yesno</source_model> -->
+<!--                             <sort_order>20</sort_order> -->
+<!--                             <show_in_default>1</show_in_default> -->
+<!--                             <show_in_website>1</show_in_website> -->
+                           
+<!--                             <comment>If choose no , it send email to customer and change serial status to used when the order is placed</comment> -->
+<!--                         </change_status> -->
+                        
+                        <email_sender>
+							<label>Email sender</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_email_identity</source_model>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+						</email_sender>
+						<template_email_purchase>
+						      <label>Template email</label>
+							 <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_email_template</source_model>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+						</template_email_purchase>
+						
+						<!--Automatically synchronize  -->
+						<qty_sync>
+						    <label>Automatically synchronization qty</label>
+							<frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>50</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            
+						</qty_sync>
+						<!--  -->
+						
+						<!--  -->
+<!-- 						<delivery_confirmed> -->
+<!-- 						     <label>Delivery must be confirmed by staff member</label> -->
+<!-- 							 <frontend_type>select</frontend_type> -->
+<!--                              <source_model>adminhtml/system_config_source_yesno</source_model> -->
+<!--                             <sort_order>60</sort_order> -->
+<!--                             <show_in_default>1</show_in_default> -->
+<!--                             <show_in_website>1</show_in_website> -->
+<!-- 						</delivery_confirmed> -->
+						
+						<!-- Send notification of low stock for PIN -->
+						<low_stock_notification>
+						     <label>Enable low stock notification</label>
+							 <frontend_type>select</frontend_type>
+                             <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>70</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+						</low_stock_notification>
+						
+						<low_stock_email_receiver1name>
+						     <label>Email receiver name 1</label>
+							 <frontend_type>text</frontend_type>
+                            <sort_order>80</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+						</low_stock_email_receiver1name>
+						<low_stock_email_receiver1>
+						     <label>Email receiver 1</label>
+							 <frontend_type>text</frontend_type>
+                            <sort_order>90</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+						</low_stock_email_receiver1>
+						
+							
+						
+						<low_stock_email_receiver2name>
+						     <label>Email receiver name 2</label>
+							 <frontend_type>text</frontend_type>
+                            <sort_order>100</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+						</low_stock_email_receiver2name>
+						<low_stock_email_receiver2>
+						     <label>Email receiver 2</label>
+							 <frontend_type>text</frontend_type>
+                            <sort_order>110</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+						</low_stock_email_receiver2>
+						
+						
+						<low_stock_email_receiver3name>
+						     <label>Email receiver name 3</label>
+							 <frontend_type>text</frontend_type>
+                            <sort_order>120</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+						</low_stock_email_receiver3name>
+						<low_stock_email_receiver3>
+						     <label>Email receiver 3</label>
+							 <frontend_type>text</frontend_type>
+                            <sort_order>130</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+						</low_stock_email_receiver3>
+						
+						
+						
+						<low_stock_number>
+						     <label>Number of pin to start send notification low stock</label>
+							 <frontend_type>text</frontend_type>
+                            <sort_order>140</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+						</low_stock_number>
+						
+						<show_pin_successpage>
+						     <label>Show PIN in success page</label>
+							 <frontend_type>select</frontend_type>
+                             <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>150</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+						</show_pin_successpage>
+						
+					</fields>
+				</general>
+			</groups>
+			 <groups>
+				<risk_management>
+					<label>Risk Management Settings</label>
+					<frontend_type>text</frontend_type>
+					<sort_order>20</sort_order>
+					<show_in_default>1</show_in_default>
+					<show_in_website>1</show_in_website>
+					<fields>
+						<payment_method>
+							<label>High risk payment method should be control</label>
+							<frontend_type>multiselect</frontend_type>
+							<sort_order>130</sort_order>
+							<source_model>adminhtml/system_config_source_payment_allmethods
+							</source_model>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<comment>Orders should only be delivered, if customer paid with
+								an settable payment method and is in an settable Customer Group,
+								or paid with an other payment method. If order is not sent admin
+								will check the customer and put him into the right customer
+								group.
+							</comment>
+						</payment_method>
+						<customer_group>
+							<label>Customer group can be received pins with above set up payment method</label>
+							<frontend_type>multiselect</frontend_type>
+							<sort_order>140</sort_order>
+							<source_model>adminhtml/system_config_source_customer_group
+							</source_model>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+						</customer_group>
+					</fields>
+				</risk_management>
+			</groups>
+		</pin>
+	</sections>
+</config>
+                      

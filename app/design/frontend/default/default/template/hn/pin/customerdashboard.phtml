@@ -1,0 +1,87 @@
+<?php
+$customerId =  Mage::getSingleton('customer/session')->getCustomer()->getId();
+
+$_items = Mage::getResourceModel('pin/orderpin_collection')->getFilePinPerCs($customerId);
+
+$_itemstxt =  Mage::getResourceModel('pin/orderpin_collection')->getTxtPinPerCs($customerId);
+?>
+
+<h2><?php echo $this->__('File Licenses') ?></h2>
+<?php if(count($_items)) { ?>
+    <table class="data-table" id="my-downloadable-products-table">
+        <col width="1" />
+        <col width="1" />
+        <col />
+        <col width="1" />
+        <col width="1" />
+        <thead>
+            <tr>
+                <th><?php echo Mage::helper('pin')->__('Order') ?></th>
+                <th><?php echo Mage::helper('pin')->__('Product name') ?></th>
+                <th><?php echo Mage::helper('pin')->__('License') ?></th>
+               
+            </tr>
+        </thead>
+        <tbody>
+            <?php $_odd = ''; ?>
+            <?php foreach ($_items as $_item) { ?>
+                <tr>
+                    <td><a href="<?php echo Mage::getBaseUrl()?>/sales/order/view/order_id/<?php echo $_item['order_item_id'] ?>"><?php echo $this->__('view order') ?> </a></td>
+                    <td>
+                    <?php echo $_item['product_name'] ?>
+                    </td>
+                    <td>
+                 
+                  	 <a href="<?php echo Mage::getBaseUrl()?>/pin/index/viewfile?id=<?php echo $_item['id'] ?>"><?php echo $this->__('View license')?></a>
+                 </td>
+                   
+                   
+                </tr>
+            <?php }  ?>
+        </tbody>
+    </table>
+    <?php } ?>
+    
+    <!--  -->
+   <h2><?php echo $this->__('Text Licenses') ?></h2> 
+    <?php if(count($_itemstxt)) { ?>
+    <table class="data-table" id="my-downloadable-products-table">
+        <col width="1" />
+        <col width="1" />
+        <col />
+        <col width="1" />
+        <col width="1" />
+        <thead>
+            <tr>
+                <th><?php echo Mage::helper('pin')->__('Order') ?></th>
+                <th><?php echo Mage::helper('pin')->__('Product name') ?></th>
+                <th><?php echo Mage::helper('pin')->__('License') ?></th>
+               
+            </tr>
+        </thead>
+        <tbody>
+            <?php $_odd = ''; ?>
+            <?php foreach ($_itemstxt as $_item) {
+            	$pinDecrypt = Mage::helper('core')->decrypt($_item['pin_number']);
+            	 ?>
+                <tr>
+                    <td><a href="<?php echo Mage::getBaseUrl()?>/sales/order/view/order_id/<?php echo $_item['order_item_id'] ?>"><?php echo $this->__('view order') ?> </a></td>
+                    <td>
+                    <?php echo $_item['product_name'] ?>
+                    </td>
+                    <td>
+                           <span><?php echo $pinDecrypt ?></span>
+                  	
+                    </td>
+                   
+                   
+                </tr>
+            <?php }  ?>
+        </tbody>
+    </table>
+    
+    <?php  } ?>
+    <script type="text/javascript">decorateTable('my-downloadable-products-table')</script>
+
+  
+

@@ -1,0 +1,1 @@
+cp -r /var/www/magento/app/code/local/HN/Pin/* /media/0721154BA31B3890/zen/pin/extension/app/code/local/HN/Pin/

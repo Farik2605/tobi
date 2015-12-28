@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<config>
+
+
+    <tabs>
+        <codeswholesale translate="label" module="apiplugin">
+            <label>CodesWholesale</label>
+            <sort_order>0</sort_order>
+        </codeswholesale>
+    </tabs>
+<sections>
+    <apiplugin_connection translate="label" module="apiplugin">
+        <label>Connection status</label>
+        <tab>codeswholesale</tab>
+        <frontend_type>text</frontend_type>
+        <frontend_model>apiplugin/adminhtml_configuration_connection_status</frontend_model>
+        <sort_order>10</sort_order>
+        <show_in_default>1</show_in_default>
+        <show_in_website>1</show_in_website>
+        <show_in_store>1</show_in_store>
+    </apiplugin_connection>
+</sections>
+   </config>

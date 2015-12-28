@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    
+<adminhtml_catalog_product_edit>
+    
+	<reference name="product_tabs">
+			<block type="pin/adminhtml_catalog_product_edit_tabs_pin" name="pin_tab"  template="hn/pin/catalog/tab/pin.phtml" />
+            <action method="addTab"><name>Pin tab</name><block>pin_tab</block></action>
+        </reference>
+</adminhtml_catalog_product_edit>
+
+<adminhtml_sales_order_view>
+		<reference name="order_tab_info">
+			<block type="adminhtml/sales_order_view_info" name="order_info" template="hn/pin/sales/order/view/info.phtml"></block>
+		</reference>
+</adminhtml_sales_order_view>
+
+<pin_adminhtml_pin_product>
+        <remove name="head" />
+        <remove name="global_notices" />
+        <remove name="notifications" />
+        <remove name="header"/>
+        <remove name="menu" />
+        <remove name="footer" />
+ 		<reference name="content">
+			<block type="adminhtml/template" name="product.pin" template="hn/pin/catalog/tab/product.phtml"></block>
+		</reference>
+		
+</pin_adminhtml_pin_product>
+
+<pin_adminhtml_pin_uploadzip>
+        <remove name="head" />
+        <remove name="global_notices" />
+        <remove name="notifications" />
+        <remove name="header"/>
+        <remove name="menu" />
+        <remove name="footer" />
+ 		<reference name="content">
+			<block type="adminhtml/template" name="product.pin.uploadzip" template="hn/pin/catalog/tab/uploadzip.phtml"></block>
+		</reference>
+</pin_adminhtml_pin_uploadzip>
+<pin_adminhtml_order_view>
+   <reference name="content">
+       <block type="adminhtml/template" template="hn/pin/order/view.phtml" />
+   </reference> 
+</pin_adminhtml_order_view>
+</layout>

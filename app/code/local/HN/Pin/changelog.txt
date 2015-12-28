@@ -1,0 +1,6 @@
+----------2.0.0-----released on Dec 14 2012
+*Addedd two type of pin that is text pin type  and file PIN type
+both text pin and file pin are stored in database , text pin is encrypted to
+enhance security
+*Added import capabilities for text pin 
+*Added purchased PIN information in customer dashboard

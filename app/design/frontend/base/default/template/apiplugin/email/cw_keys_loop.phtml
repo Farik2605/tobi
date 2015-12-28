@@ -1,0 +1,36 @@
+<?php
+
+$keys = $this->getKeys();
+
+if (count($keys) > 0) {
+
+    foreach ($keys as $item) {
+
+		echo '<b>'. $item['item']->getData('name') . ' </b> <br />';
+
+        foreach ($item['codes'] as $code) {
+
+            if ($code->isPreOrder()) {
+
+                echo 'Code is Pre-Order' . '<br/>';
+
+            } else if ($code->isImage()){
+
+                echo 'Check in attachment file: ' . $code->getFileName() . '<br />';
+
+            } else if ($code->isText()){
+
+                echo $code->getCode() . '<br/>';
+                
+            }
+
+        }
+        
+        echo '<br />';
+        
+    }
+}
+
+
+
+

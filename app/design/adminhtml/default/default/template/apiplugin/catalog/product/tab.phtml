@@ -1,0 +1,142 @@
+<?php
+$productOptions = $this->getProductOptions();
+?>
+
+<div id="product_info_tabs_customer_options_content">
+
+    <div class="entry-edit custom-options product-custom-options">
+
+        <div class="entry-edit-head">
+            <h4>CodesWholesale Product Settings</h4>
+        </div>
+
+        <div id="product_options_container" class="box">
+
+            <div id="product_options_container_top"></div>
+
+            <table cellspacing="0" class="form-list">
+
+                <tbody>
+
+                <tr>
+                    <td class="label"><label for="product">Choose CodesWholesale Product</label></td>
+
+                    <td class="value">
+                        <select name="codeswholesale_product_id" id="codeswholesale_product_id">
+
+                            <?php $products = $this->getProducts(); ?>
+
+                            <option data-no-product= "1">-- Please select product --</option>
+
+                            <?php foreach ($products as $product) { ?>
+
+                                <option data-stock-quantity="<?php echo $product->getStockQuantity(); ?>"
+                                        data-product-price="<?php echo $product->getLowestPrice(); ?>"
+                                        value="<?php echo $product->getProductId(); ?>"
+                                        <?php if (!empty($productOptions[0]) && $productOptions[0] == $product->getProductId()) { ?>selected="selected"<?php } ?>>
+
+                                    <?php echo $product->getName() . " - " . $product->getPlatform() . " - " . $product->getStockQuantity() . " - €" . number_format($product->getLowestPrice(), 2, '.', ''); ?>
+
+                                </option>
+
+                            <?php } ?>
+                        </select>
+                        <i>When you will choose CodesWholesale product we will automatically add our stock quantity, and price with your choosen spread.</i>
+                    </td>
+                    <td class="scope-label"><span class="nobr"></span></td>
+                </tr>
+
+                <tr>
+                    <td class="label"><label for="description">Calculate Type</label></td>
+                    <td class="value">
+                        <select id="codeswholesale_calculate_value" name="codeswholesale_calculate_value">
+                            <option value="0" <?php if ($productOptions[1] == 0) { ?> selected="selected" <?php } ?>>
+                                CodesWholesale price and stock
+                            </option>
+                            <option value="1" <?php if ($productOptions[1] == 1) { ?> selected="selected" <?php } ?>>
+                                Custom price and stock
+                            </option>
+                        </select>
+                        <i>Choose your type of calculating price.</i>
+                    </td>
+                    <td class="scope-label"><span class="nobr"></span></td>
+                </tr>
+                </tbody>
+
+            </table>
+
+        </div>
+    </div>
+</div>
+
+<?php
+$codeswholesaleSpreadType = Mage::getStoreConfig('apiplugin_connection/apiplugin_group/apiplugin_spread_type');
+$codeswholesaleSpread = str_replace(',', '.', Mage::getStoreConfig('apiplugin_connection/apiplugin_group/apiplugin_spread_value'));
+?>
+
+<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
+<script type="text/javascript">
+
+    var j = jQuery.noConflict();
+
+    j(document).ready(function () {
+
+        function setProductPrice() {
+
+            var spread_type = <?php echo $codeswholesaleSpreadType ;?>;
+            var spread = <?php echo $codeswholesaleSpread == null ? 0 : $codeswholesaleSpread; ?>;
+            var price = j("option:selected", "#codeswholesale_product_id").attr("data-product-price");
+            var stock = j("option:selected", "#codeswholesale_product_id").attr("data-stock-quantity");
+            var noProduct = j("option:selected", "#codeswholesale_product_id").attr("data-no-product");
+
+
+            if (noProduct){
+
+                j("#inventory_qty").val("");
+                j("#price").val("");
+            }
+
+            if (j("option:selected", this).length == 0 && spread_type == 0 && !noProduct) {
+
+                j("#price").val(parseFloat(price) + parseFloat(spread));
+                j("#inventory_qty").val(stock);
+                if(stock > 0) {
+
+                    j("#inventory_stock_availability").val(1);
+                }
+
+            } else if (j("option:selected", this).length == 0 && spread_type == 1 && !noProduct) {
+
+                var calculate = (parseFloat(price) / 100 * parseFloat(spread)) + parseFloat(price);
+
+                j("#price").val(calculate.toFixed(2));
+                j("#inventory_qty").val(stock);
+                if(stock > 0) {
+
+                    j("#inventory_stock_availability").val(1);
+                }
+            }
+        }
+
+        j("#codeswholesale_calculate_value").change(function () {
+
+            var value = j("#codeswholesale_calculate_value").val();
+
+            if (value == 1) {
+
+                j("#price").val("");
+                j("#inventory_qty").val(1);
+            }
+            else {
+
+                setProductPrice();
+            }
+
+        });
+
+        j("#codeswholesale_product_id").change(function () {
+
+            setProductPrice();
+        })
+    });
+</script>
