@@ -32,6 +32,11 @@ class HN_Pin_Block_Adminhtml_Pin_Grid extends Mage_Adminhtml_Block_Widget_Grid
 		 array('header' => Mage::helper('pin')->__('Product Name'),
 		 'align' =>'right','width' => '50px','index' => 'product_name',
 		 ));
+
+        $this->addColumn('invoice_id',
+            array('header' => Mage::helper('pin')->__('Invoice ID'),
+                'align' =>'right','width' => '50px','index' => 'invoice_id',
+            ));
 		 
 		 $this->addColumn('filetype',
 		 array('header' => Mage::helper('pin')->__('File Type'),

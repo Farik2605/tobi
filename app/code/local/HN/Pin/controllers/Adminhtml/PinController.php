@@ -341,6 +341,7 @@ class HN_Pin_Adminhtml_PinController extends Mage_Adminhtml_Controller_Action {
 										if (isset ( $data ['productid'] )) {
 											$productModel = Mage::getModel ( 'catalog/product' )->load ( $data ['productid'] );
 											$pinModel->setData ( 'product_id', $data ['productid'] );
+											//$pinModel->setData ( 'invoice_id', $data ['pin_invoice_id'] );
 											$pinModel->setData ( 'product_name', $productName = $productModel->getName () );
 										}
 										
@@ -454,6 +455,7 @@ class HN_Pin_Adminhtml_PinController extends Mage_Adminhtml_Controller_Action {
 							$pinModel->setData ( 'status', HN_Pin_Model_Pin::STATUS_AVAILABLE );
 							if (isset ( $data ['productid'] )) {
 								$pinModel->setData ( 'product_id', $data ['productid'] );
+                                $pinModel->setInvoiceId ($data ['pin_invoice_id'] );
 								$pinModel->setData ( 'product_name', $productName = $productModel->getName () );
 							}
 							
@@ -474,6 +476,7 @@ class HN_Pin_Adminhtml_PinController extends Mage_Adminhtml_Controller_Action {
 							$pinModel->setData ( 'status', HN_Pin_Model_Pin::STATUS_AVAILABLE );
 							if (isset ( $data ['productid'] )) {
 								$pinModel->setData ( 'product_id', $data ['productid'] );
+                                $pinModel->setInvoiceId ($data ['pin_invoice_id'] );
 								$pinModel->setData ( 'product_name', $productName = $productModel->getName () );
 							}
 							

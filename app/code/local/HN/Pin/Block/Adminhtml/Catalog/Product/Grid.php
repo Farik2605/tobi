@@ -49,6 +49,13 @@ class HN_Pin_Block_Adminhtml_Catalog_Product_Grid extends Mage_Adminhtml_Block_W
 				'type' => 'options',
 				'options' => $options 
 		) );
+
+        $this->addColumn( 'invoice_id',array(
+                'header' => Mage::helper('pin')->__('Invoice ID'),
+                'align' =>'right',
+                'width' => '50px',
+                'index' => 'invoice_id',
+        ) );
 		
 		$this->addColumn ( 'pin', array (
 				'header' => Mage::helper ( 'pin' )->__ ( 'PIN' ),
