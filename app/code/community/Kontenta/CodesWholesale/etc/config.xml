@@ -1,0 +1,28 @@
+<config>
+    <modules>
+        <Kontenta_CodesWholesale>
+            <version>0.1.0</version>
+        </Kontenta_CodesWholesale>
+    </modules>
+    <admin>
+        <routers>
+            <adminhtml>
+                <args>
+                    <modules>
+                        <kontentacodeswholesale before="Mage_Adminhtml">Kontenta_CodesWholesale_Adminhtml</kontentacodeswholesale>
+                    </modules>
+                </args>
+            </adminhtml>
+        </routers>
+    </admin>
+    <global>
+        <resources>
+            <kontenta_cw_attribute_setup>
+                <setup>
+                    <module>Kontenta_CodesWholesale</module>
+                    <class>Mage_Catalog_Model_Resource_Setup</class>
+                </setup>
+            </kontenta_cw_attribute_setup>
+        </resources>
+    </global>
+</config>

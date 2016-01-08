@@ -659,4 +659,14 @@ class HN_Pin_Adminhtml_PinController extends Mage_Adminhtml_Controller_Action {
 		$this->_addContent ( $this->getLayout ()->createBlock ( 'pin/adminhtml_pin_product_grid' ) );
 		$this->renderLayout ();
 	}
+
+    public function searchAjaxCWProductsAction(){
+        $value = $this->getRequest()->getPost("value");
+        $results = Mage::helper("apiplugin")->getProductsBySubStr($value);
+        echo json_encode($results);
+    }
+
+    public function confirmCorrespondingProductAction(){
+        echo "hello";
+    }
 }

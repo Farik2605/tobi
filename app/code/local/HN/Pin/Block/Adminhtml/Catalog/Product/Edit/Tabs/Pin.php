@@ -123,7 +123,6 @@ class HN_Pin_Block_Adminhtml_Catalog_Product_Edit_Tabs_Pin extends Mage_Adminhtm
 	 * get the product Id in the url
 	 */
 	public function getProductId() {
-		Mage::log("getProductId function", null, 'game.log' ,true);
 		
 		$productId = 0;
 		$requesturl =  Mage::app()->getRequest()->getRequestUri();
@@ -134,8 +133,11 @@ class HN_Pin_Block_Adminhtml_Catalog_Product_Edit_Tabs_Pin extends Mage_Adminhtm
 		if (isset($matches[1]) ){
 			$productId =$matches[1] ;
 		}
-		Mage::log($productId, null, 'game.log' ,true);
 		return $productId;
 	}
+
+    public function getProductInstance(){
+        return Mage::getModel("catalog/product")->load($this->getProductId());
+    }
 
 }

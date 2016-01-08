@@ -1,5 +1,5 @@
 <?php
-
+require_once 'vendor/autoload.php';
 use CodesWholesaleFramework\Connection\Connection;
 
 class CodesWholesale_ApiPlugin_Helper_Data extends Mage_Core_Helper_Abstract
@@ -24,6 +24,17 @@ class CodesWholesale_ApiPlugin_Helper_Data extends Mage_Core_Helper_Abstract
         );
 
         return Connection::getConnection($options);
+    }
+
+    public function getProductsBySubStr($substr){
+        $client = $this->connectToCw();
+        $result = array();
+        foreach($client->getProducts() as $product){
+            if(stristr($product->getName(), $substr)){
+                $result[] = array("id"=>$product->getProductId(),"name"=>$product->getName());
+            }
+        }
+        return $result;
     }
 }
 	 

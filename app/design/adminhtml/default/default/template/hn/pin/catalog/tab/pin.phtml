@@ -328,6 +328,15 @@
 	height: 32px;
 }
 
+.search_list li:hover{
+    cursor: pointer;
+}
+
+.search_list {
+    z-index: 999;
+    background-color: #ffffff;
+}
+
 #fancybox-title-float-wrap {
 	border: none;
 	border-collapse: collapse;
@@ -398,11 +407,112 @@
 <script type="text/javascript" src="<?php echo $this->getJsUrl('fancybox/noc.js') ?>"></script>
  <script type="text/javascript">
 jQuery(document).ready(function() {
+    var timer;
+    var ajaxUrl = "<?php echo $this->getUrl('pin/adminhtml_pin/searchAjaxCWProducts').'?ajax=true&isAjax=true'?>";
+    var formKey = "<?php echo $this->getFormKey()?>";
+
 	jQuery("#fancyimg").fancybox();
 
 	jQuery("#fancyzip").fancybox();
+
+    closeDiv = function(el){
+        jQuery(jQuery(el).parent()).parent().hide();
+    }
+
+    hideDiv = function(el){
+        var id = jQuery(el).data("id");
+        jQuery("#cw_product_id").val(id);
+        var name = jQuery(el).children().text();
+        jQuery("#corr_search").val(name);
+        closeDiv(el);
+    }
+
+    //TODO clear the value of corresponding product
+
+    showDiv = function(products){
+        var el = jQuery("#corr_search");
+        var str = "<ul class='search_list'>";
+        if(products.length > 0){
+            jQuery.each(products, function(key,product){
+                str = str+"<li data-id='"+product.id+"' onclick='hideDiv(this)'><b>"+product.name+"</b></li>";
+            });
+        }else{
+            str = str + "<li>No results<li>";
+        }
+        str = str + "<li onclick='closeDiv(this)'><a><span>close</span></a><li>";
+        str = str+"</ul>";
+        if(jQuery(".search_products_div").length > 0){
+            jQuery(".search_products_div").html(str).css('display','inline-block');
+        }else{
+            var div = jQuery('<div class="search_products_div" />').html(str)
+                .css('display', 'inline-block')
+                .css('position', 'absolute')
+                .css('top', el.outerHeight() + el.offset().top)
+                .css('left', el.position().left)
+                .css('min-width', '200px')
+                .css('min-height', '20px')
+                .css('border', '1px solid #000');
+            el.after(div);
+        }
+    }
+
+    showPopup = function(el){
+        var val = jQuery(el).val();
+        if(val){
+            data = {
+                form_key: formKey,
+                value: val
+            };
+            jQuery.ajax({
+                url: ajaxUrl,
+                type: "POST",
+                data: data,
+                success: function(resp){
+                    products = JSON.parse(resp);
+                    showDiv(products);
+                    console.log(products);
+                }
+            });
+        }
+    }
+
+    jQuery("#corr_search").keyup(function(){
+        clearTimeout(timer);
+        var that = this;
+        timer = setTimeout(function () {
+            showPopup(that);
+        }, 600);
+    });
 }) ;
  </script>
+ <?php $_product = $this->getProductInstance()?>
+ <div class="entry-edit" >
+
+     <div class="entry-edit-head">
+         <h4 class="icon-head head-edit-form fieldset-legend"><?php echo $this->__('Corresponding product options')?></h4>
+     </div>
+     <div class="box">
+        <form action="<?php echo $this->getUrl('*/kontenta_codeswholesale_index/submit')?>" method="POST">
+            <div style="margin-bottom: 20px;">
+                <input type="hidden" name="form_key" value="<?php echo $this->getFormKey(); ?>" />
+                <input type="hidden" name="productid" value="<?php echo $this->getRequest()->getParam('id') ?>" />
+
+                <input type="text" name="corresponding_product" value="" id="corr_search" style="width:150px"/>
+                <input type="hidden" name="cw_product_id" value="" id="cw_product_id"/>
+            </div>
+            <div class="buttons-set">
+                <button class="button" type="submit"><span><?php echo $this->__("Apply")?></span></button>
+            </div>
+        </form>
+         <?php if($_product->getKontentaCorrespondingProduct()):?>
+             <div>
+                 <span><?php echo $this->__("Corresponding Product")?></span>
+                 -
+                 <?php echo $_product->getKontentaCorrespondingProduct()?>
+             </div>
+         <?php endif;?>
+     </div>
+ </div>
  <div class="entry-edit" >
                        <div class="entry-edit-head">
                        			<h4 class="icon-head head-edit-form fieldset-legend"><?php echo $this->__('Game license delivery')?></h4>

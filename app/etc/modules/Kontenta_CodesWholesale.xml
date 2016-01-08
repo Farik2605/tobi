@@ -1,0 +1,8 @@
+<config>
+    <modules>
+        <Kontenta_CodesWholesale>
+            <active>true</active>
+            <codePool>community</codePool>
+        </Kontenta_CodesWholesale>
+    </modules>
+</config>
