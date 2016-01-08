@@ -13,7 +13,7 @@ class Kontenta_CodesWholesale_Adminhtml_Kontenta_Codeswholesale_IndexController 
             $this->_redirectToProductView($product_id);
         }
         if($product_id){
-            $product = Mage::getModel("catalog/product")->load(9);
+            $product = Mage::getModel("catalog/product")->load($product_id);
             $product->setKontentaCorrespondingProduct($corr_id);
             try{
                 $product->save();
