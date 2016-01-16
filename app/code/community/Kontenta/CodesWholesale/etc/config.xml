@@ -1,9 +1,31 @@
 <config>
     <modules>
         <Kontenta_CodesWholesale>
-            <version>0.1.0</version>
+            <version>0.2.0</version>
         </Kontenta_CodesWholesale>
     </modules>
+    <adminhtml>
+        <events>
+            <core_block_abstract_prepare_layout_before>
+                <observers>
+                    <kontenta_codeswholesale_addcolumn_to_product>
+                        <type>singleton</type>
+                        <class>Kontenta_CodesWholesale_Model_Observer</class>
+                        <method>addFlagColumnToProductGrid</method>
+                    </kontenta_codeswholesale_addcolumn_to_product>
+                </observers>
+            </core_block_abstract_prepare_layout_before>
+            <catalog_product_collection_load_before>
+                <observers>
+                    <kontenta_codeswholesale_before_collection>
+                        <type>singleton</type>
+                        <class>Kontenta_CodesWholesale_Model_Observer</class>
+                        <method>onEavLoadBeforeProductFlag</method>
+                    </kontenta_codeswholesale_before_collection>
+                </observers>
+            </catalog_product_collection_load_before>
+        </events>
+    </adminhtml>
     <admin>
         <routers>
             <adminhtml>
@@ -16,6 +38,11 @@
         </routers>
     </admin>
     <global>
+        <models>
+            <kontentacw>
+                <class>Kontenta_CodesWholesale_Model</class>
+            </kontentacw>
+        </models>
         <resources>
             <kontenta_cw_attribute_setup>
                 <setup>

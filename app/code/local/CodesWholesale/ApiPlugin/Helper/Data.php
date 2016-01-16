@@ -36,5 +36,14 @@ class CodesWholesale_ApiPlugin_Helper_Data extends Mage_Core_Helper_Abstract
         }
         return $result;
     }
+
+    public function getProductById($id){
+        $client = $this->connectToCw();
+        foreach($client->getProducts() as $product){
+            if($product->getProductId() == $id)
+                return $product;
+        }
+        return false;
+    }
 }
 	 

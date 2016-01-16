@@ -498,7 +498,40 @@ jQuery(document).ready(function() {
                 <input type="hidden" name="productid" value="<?php echo $this->getRequest()->getParam('id') ?>" />
 
                 <input type="text" name="corresponding_product" value="" id="corr_search" style="width:150px"/>
-                <input type="hidden" name="cw_product_id" value="" id="cw_product_id"/>
+                <div>
+                    <table class="form-list" cellspacing="0">
+                        <tbody>
+                            <tr>
+                                <td class="label">
+                                    <label><?php echo $this->__("Sync <b>price</b> with codeswholesale.com") ?></label>
+                                </td>
+                                <td class="value">
+                                    <input type="radio" <?php echo $_product->getData('kontenta_cw_sync_price') ? 'checked' : ''?> name="product[kontenta_cw_sync_price]" value="1"><label><?php echo $this->__("Yes")?></label>
+                                    <input type="radio" <?php echo $_product->getData('kontenta_cw_sync_price') ? '' : 'checked'?> name="product[kontenta_cw_sync_price]" value="0"><label><?php echo $this->__("No")?></label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="label">
+                                    <label><?php echo $this->__("Sync <b>stock</b> with codeswholesale.com") ?></label>
+                                </td>
+                                <td class="value">
+                                    <input type="radio" <?php echo $_product->getData('kontenta_cw_sync_stock') ? 'checked' : ''?> name="product[kontenta_cw_sync_stock]" value="1"><label><?php echo $this->__("Yes")?></label>
+                                    <input type="radio" <?php echo $_product->getData('kontenta_cw_sync_stock') ? '' : 'checked'?> name="product[kontenta_cw_sync_stock]" value="0"><label><?php echo $this->__("No")?></label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="label">
+                                    <label><?php echo $this->__("If preorder product; pre order from codeswholesale.com?") ?></label>
+                                </td>
+                                <td class="value">
+                                    <input type="radio" <?php echo $_product->getData('kontenta_cw_preorder') ? 'checked' : ''?> name="product[kontenta_cw_preorder]" value="1"><label><?php echo $this->__("Yes")?></label>
+                                    <input type="radio" <?php echo $_product->getData('kontenta_cw_preorder') ? '' : 'checked'?> name="product[kontenta_cw_preorder]" value="0"><label><?php echo $this->__("No")?></label>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <input type="hidden" name="product[kontenta_corresponding_product]" value="<?php echo $_product->getKontentaCorrespondingProduct() ? $_product->getKontentaCorrespondingProduct() : ''?>" id="cw_product_id"/>
             </div>
             <div class="buttons-set">
                 <button class="button" type="submit"><span><?php echo $this->__("Apply")?></span></button>
