@@ -9,8 +9,13 @@ class CodesWholesale_ApiPlugin_IndexController extends Mage_Core_Controller_Fron
             /*echo $product->getName();
             echo "<br />";*/
             //echo strstr($product->getName(), "test")."<br />";
-            echo $product->getName()." - ".$product->getDefaultPrice();
+            echo $product->getName()." - ".$product->getStockQuantity();
             //var_dump(get_class_methods($product));
+        }
+        $collection = Mage::getModel('pin/pin')->getCollection()->addFieldToFilter("product_id",array("eq"=>2));
+        echo $collection->getSize();
+        foreach($collection as $c){
+            echo $c->getProductId()."<br />";
         }
         //var_dump($clientBuilder);
         //var_dump(Mage::helper("apiplugin")->getProductsBySubStr("test"));

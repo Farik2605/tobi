@@ -38,6 +38,11 @@
         </routers>
     </admin>
     <global>
+        <helpers>
+            <kontentaCw>
+                <class>Kontenta_CodesWholesale_Helper</class>
+            </kontentaCw>
+        </helpers>
         <models>
             <kontentacw>
                 <class>Kontenta_CodesWholesale_Model</class>
