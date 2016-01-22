@@ -16,7 +16,7 @@ class Kontenta_CodesWholesale_Model_Observer {
             $block->addColumnAfter(
                 'kontenta_cw_sync_price',
                 array(
-                    'header' => Mage::helper("adminhtml")->__('CW price sync'),
+                    'header' => Mage::helper("adminhtml")->__('CW cost price sync'),
                     'align' => 'center',
                     'width' => '20px',
                     'type' => 'options',
