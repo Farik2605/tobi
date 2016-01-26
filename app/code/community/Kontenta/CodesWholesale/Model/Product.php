@@ -8,14 +8,31 @@ class Kontenta_CodesWholesale_Model_Product extends Mage_Catalog_Model_Product{
     protected $_productCW;
 
     public function synchronize(){
-        if($this->getData(self::CW_SYNC_PRICE))
-            $this->_syncCost();
+        if($this->getData(self::KONTENTA_CW_PRODUCT_ID)){
+            if($this->getData(self::CW_SYNC_PRICE))
+                $this->_syncCost();
+            if($this->getData(self::CW_SYNC_STOCK))
+                $this->_syncStock();
+        }
     }
 
     protected function _syncCost(){
         $productCW = $this->_getProductCW();
         if($productCW)
             $this->setCost($productCW->getDefaultPrice());
+        return $this;
+    }
+
+    protected function _syncStock(){
+        $collection = Mage::getModel('pin/pin')->getCollection()->addFieldToFilter("product_id",array("eq"=>$this->getEntityId()));
+        $qty = $collection->getSize() ? $collection->getSize() : '0';
+        $qty = $qty*1;
+        $product = Mage::helper("kontentaCw")->getRendererData($this);
+        if($product)
+            $qty += $product["qty"];
+        $stockItem =Mage::getModel('cataloginventory/stock_item')->loadByProduct($this->getEntityId());
+        $stockItem->setData('qty', $qty);
+        $stockItem->save();
         return $this;
     }
 
