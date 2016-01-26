@@ -1,11 +1,11 @@
 <?xml version="1.0"?>
-<config>
+<!--<config>
 
 
     <tabs>
         <codeswholesale translate="label" module="apiplugin">
             <label>CodesWholesale</label>
-            <sort_order>0</sort_order>
+            <sort_order>100</sort_order>
         </codeswholesale>
     </tabs>
 <sections>
@@ -20,4 +20,4 @@
         <show_in_store>1</show_in_store>
     </apiplugin_connection>
 </sections>
-   </config>
+   </config>-->

@@ -21,6 +21,17 @@ class CodesWholesale_ApiPlugin_IndexController extends Mage_Core_Controller_Fron
         //var_dump(Mage::helper("apiplugin")->getProductsBySubStr("test"));
         echo "something";
         $product = Mage::getModel("kontentacw/product")->load(2);
+        var_dump(get_class_methods($client->getAccount()));
+        echo "<br />";
+        echo Mage::getStoreConfig ( 'pin/cw_settings/cw_environment', 1 );
+        echo "<br />";
+        echo Mage::getStoreConfig ( 'pin/cw_settings/cw_client_id', 1 );
+        echo "<br />";
+        echo Mage::getStoreConfig ( 'pin/cw_settings/cw_client_secret', 1 );
+        echo "<br />";
+        echo Mage::getStoreConfig ( 'pin/cw_settings/cw_client_secret', 1 );
+        echo "<br />";
+        echo "asdasa";
         //var_dump(Mage::helper("apiplugin")->getProductById($product->getData("kontenta_corresponding_product")));
 
         //$product = Mage::getModel("catalog/product")->load(2);
