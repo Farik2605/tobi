@@ -31,10 +31,10 @@ class Kontenta_CodesWholesale_Helper_Data extends Mage_Core_Helper_Abstract{
         return $products;
     }
 
-    public function sendEmailCw($data=null){
+    public function sendEmailCw($customerEmail){
         $storeId = Mage::app()->getStore()->getStoreId();
         //$supportEmail = Mage::getStoreConfig('trans_email/ident_support/email', $storeId);
-        $customerEmail = "farik63@gmail.com";
+        //$customerEmail = "farik63@gmail.com";
         $name = "Dr. Smith";
         $emailTemplate  = Mage::getModel('core/email_template')
             ->loadDefault(self::EMAIL_AFTER_ORDER_CW);
@@ -45,7 +45,6 @@ class Kontenta_CodesWholesale_Helper_Data extends Mage_Core_Helper_Abstract{
             ->setSenderEmail("shop@mail.com")
             //->setDelivery("smtp")
             ->setTemplateSubject("New Code");
-        //Mage::log($emailTemplate,null,"email.log");
         $emailTemplate->send($customerEmail,$name);
     }
 } 

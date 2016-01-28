@@ -76,5 +76,9 @@ class Kontenta_CodesWholesale_Model_Observer {
 
    public function placeOrderAfter($observer){
        $order = $observer->getEvent()->getOrder();
+       $customerEmail = $order->getCustomerEmail();
+       foreach($order->getItemsCollection() as $item){
+           Mage::helper("kontentaCw")->sendEmailCw($customerEmail);
+       }
    }
 } 

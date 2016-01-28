@@ -19,7 +19,8 @@ class CodesWholesale_ApiPlugin_IndexController extends Mage_Core_Controller_Fron
 
         //$product = Mage::getModel("catalog/product")->load(2);
         //var_dump($product->getData());
-        $order = Mage::getModel("sales/order")->load(5);
+        $order = Mage::getModel("sales/order")->load(1);
+        echo $order->getCustomerEmail();
         foreach($order->getItemsCollection() as $item){
             Mage::helper("kontentaCw")->sendEmailCw();
             echo $item->getProductId();

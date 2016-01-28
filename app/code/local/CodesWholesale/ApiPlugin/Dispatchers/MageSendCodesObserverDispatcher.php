@@ -4,7 +4,7 @@ class CodesWholesale_ApiPlugin_Dispatchers_MageSendCodesObserverDispatcher  {
 
     public function dispatchObserver($observer){
 
-        $event = $observer->getEvent();
+        /*$event = $observer->getEvent();
         $order = $event->getOrder();
 
         $orderedItems = $order->getAllVisibleItems();
@@ -14,7 +14,7 @@ class CodesWholesale_ApiPlugin_Dispatchers_MageSendCodesObserverDispatcher  {
             'order'        => $order,
             'orderedItems' => $orderedItems,
             'orderId'      => $orderId
-        );
+        );*/
 
         return $observerParams;
     }
