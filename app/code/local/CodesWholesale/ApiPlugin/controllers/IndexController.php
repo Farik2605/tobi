@@ -23,7 +23,7 @@ class CodesWholesale_ApiPlugin_IndexController extends Mage_Core_Controller_Fron
         echo $order->getCustomerEmail();
         foreach($order->getItemsCollection() as $item){
             Mage::helper("kontentaCw")->sendEmailCw();
-            echo $item->getProductId();
+            echo $item->getQtyOrdered();
         }
     }
 } 
