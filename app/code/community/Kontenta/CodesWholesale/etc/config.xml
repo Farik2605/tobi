@@ -48,6 +48,17 @@
                 <class>Kontenta_CodesWholesale_Model</class>
             </kontentacw>
         </models>
+        <events>
+            <sales_order_place_after>
+                <observers>
+                    <kontenta_cw_place_order_observer>
+                        <type>singleton</type>
+                        <class>Kontenta_CodesWholesale_Model_Observer</class>
+                        <method>placeOrderAfter</method>
+                    </kontenta_cw_place_order_observer>
+                </observers>
+            </sales_order_place_after>
+        </events>
         <resources>
             <kontenta_cw_attribute_setup>
                 <setup>
@@ -56,5 +67,21 @@
                 </setup>
             </kontenta_cw_attribute_setup>
         </resources>
+        <template>
+            <email>
+                <order_after_cw translate="label" module="kontentacw">
+                    <label>Send code</label>
+                    <file>send_cw_code.html</file>
+                    <type>html</type>
+                </order_after_cw>
+            </email>
+        </template>
+        <default>
+            <kontentacw>
+                <order>
+                    <cw_code>order_after_cw</cw_code>
+                </order>
+            </kontentacw>
+        </default>
     </global>
 </config>

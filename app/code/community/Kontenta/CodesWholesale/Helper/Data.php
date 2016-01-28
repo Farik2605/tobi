@@ -3,6 +3,7 @@ class Kontenta_CodesWholesale_Helper_Data extends Mage_Core_Helper_Abstract{
 
     const ADMIN_CW_TIME_UPDATE  = "cw_last_time_update";
     const ADMIN_CW_PRODUCTS     = "cw_products";
+    const EMAIL_AFTER_ORDER_CW  = "order_after_cw";
 
     public function getRendererData($row){
         $products = $this->_getProducts();
@@ -28,5 +29,23 @@ class Kontenta_CodesWholesale_Helper_Data extends Mage_Core_Helper_Abstract{
             $products = $session->getData(self::ADMIN_CW_PRODUCTS);
         }
         return $products;
+    }
+
+    public function sendEmailCw($data=null){
+        $storeId = Mage::app()->getStore()->getStoreId();
+        //$supportEmail = Mage::getStoreConfig('trans_email/ident_support/email', $storeId);
+        $customerEmail = "farik63@gmail.com";
+        $name = "Dr. Smith";
+        $emailTemplate  = Mage::getModel('core/email_template')
+            ->loadDefault(self::EMAIL_AFTER_ORDER_CW);
+        $emailTemplateVariables = array();
+        $processedTemplate = $emailTemplate->getProcessedTemplate($emailTemplateVariables);
+        $emailTemplate->setSenderName("Shop")
+            //->setSenderEmail($supportEmail)
+            ->setSenderEmail("shop@mail.com")
+            //->setDelivery("smtp")
+            ->setTemplateSubject("New Code");
+        //Mage::log($emailTemplate,null,"email.log");
+        $emailTemplate->send($customerEmail,$name);
     }
 } 

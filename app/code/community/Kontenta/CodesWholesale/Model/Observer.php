@@ -73,4 +73,8 @@ class Kontenta_CodesWholesale_Model_Observer {
             $collection->joinAttribute(Kontenta_CodesWholesale_Model_Product::KONTENTA_CW_PRODUCT_ID, 'catalog_product/'.Kontenta_CodesWholesale_Model_Product::KONTENTA_CW_PRODUCT_ID, 'entity_id', null, 'left');
         }
     }
+
+   public function placeOrderAfter($observer){
+       $order = $observer->getEvent()->getOrder();
+   }
 } 

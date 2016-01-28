@@ -16,7 +16,6 @@ class Kontenta_CodesWholesale_Adminhtml_Kontenta_Codeswholesale_IndexController 
         }
         if($product_id){
             $product = Mage::getModel("kontentacw/product")->load($product_id);
-            echo $product->getCost();
             foreach($data["product"] as $k=>$v){
                 $product->setData($k,$v);
             }

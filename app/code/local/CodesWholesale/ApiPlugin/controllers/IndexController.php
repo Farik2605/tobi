@@ -4,11 +4,9 @@ class CodesWholesale_ApiPlugin_IndexController extends Mage_Core_Controller_Fron
         $params = array(
 
         );
-        $client = Mage::helper("apiplugin")->connectToCw();
+       /* $client = Mage::helper("apiplugin")->connectToCw();
         foreach($client->getProducts() as $product){
-            /*echo $product->getName();
-            echo "<br />";*/
-            //echo strstr($product->getName(), "test")."<br />";
+
             echo $product->getName()." - ".$product->getStockQuantity();
             //var_dump(get_class_methods($product));
         }
@@ -16,25 +14,15 @@ class CodesWholesale_ApiPlugin_IndexController extends Mage_Core_Controller_Fron
         echo $collection->getSize();
         foreach($collection as $c){
             echo $c->getProductId()."<br />";
-        }
-        //var_dump($clientBuilder);
-        //var_dump(Mage::helper("apiplugin")->getProductsBySubStr("test"));
-        echo "something";
-        $product = Mage::getModel("kontentacw/product")->load(2);
-        var_dump(get_class_methods($client->getAccount()));
-        echo "<br />";
-        echo Mage::getStoreConfig ( 'pin/cw_settings/cw_environment', 1 );
-        echo "<br />";
-        echo Mage::getStoreConfig ( 'pin/cw_settings/cw_client_id', 1 );
-        echo "<br />";
-        echo Mage::getStoreConfig ( 'pin/cw_settings/cw_client_secret', 1 );
-        echo "<br />";
-        echo Mage::getStoreConfig ( 'pin/cw_settings/cw_client_secret', 1 );
-        echo "<br />";
-        echo "asdasa";
+        }*/
         //var_dump(Mage::helper("apiplugin")->getProductById($product->getData("kontenta_corresponding_product")));
 
         //$product = Mage::getModel("catalog/product")->load(2);
         //var_dump($product->getData());
+        $order = Mage::getModel("sales/order")->load(5);
+        foreach($order->getItemsCollection() as $item){
+            Mage::helper("kontentaCw")->sendEmailCw();
+            echo $item->getProductId();
+        }
     }
 } 
