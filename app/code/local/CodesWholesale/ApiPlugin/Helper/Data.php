@@ -55,5 +55,23 @@ class CodesWholesale_ApiPlugin_Helper_Data extends Mage_Core_Helper_Abstract
         }
         return false;
     }
+
+    public function checkPreOrder(){
+        $cart = Mage::getSingleton('checkout/cart');
+        $quote = $cart->getQuote();
+        $is_preorder = false;
+        $is_normal = false;
+        if($quote->getItemsCount() > 1){
+            foreach($cart->getQuote()->getItemsCollection() as $item){
+                $stockItem = Mage::getModel('cataloginventory/stock_item')->loadByProduct($item->getProductId());
+                if($stockItem->getBackorders() == 1)
+                    $is_preorder = true;
+                else
+                    $is_normal = true;
+            }
+            return $is_preorder && $is_normal;
+        }
+        return false;
+    }
 }
 	 

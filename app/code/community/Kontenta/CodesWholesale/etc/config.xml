@@ -37,6 +37,17 @@
             </adminhtml>
         </routers>
     </admin>
+    <frontend>
+        <routers>
+            <checkout>
+                <args>
+                    <modules>
+                        <kontentacodeswholesale before="Mage_Checkout">Kontenta_CodesWholesale_Mage_Checkout</kontentacodeswholesale>
+                    </modules>
+                </args>
+            </checkout>
+        </routers>
+    </frontend>
     <global>
         <helpers>
             <kontentaCw>

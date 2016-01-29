@@ -1,4 +1,7 @@
 <?php
+require_once 'vendor/autoload.php';
+use CodesWholesale\CodesWholesale;
+
 class CodesWholesale_ApiPlugin_IndexController extends Mage_Core_Controller_Front_Action{
     public function indexAction(){
         $params = array(
@@ -19,11 +22,16 @@ class CodesWholesale_ApiPlugin_IndexController extends Mage_Core_Controller_Fron
 
         //$product = Mage::getModel("catalog/product")->load(2);
         //var_dump($product->getData());
-        $order = Mage::getModel("sales/order")->load(1);
-        echo $order->getCustomerEmail();
-        foreach($order->getItemsCollection() as $item){
-            Mage::helper("kontentaCw")->sendEmailCw();
-            echo $item->getQtyOrdered();
+        //$client = Mage::helper("apiplugin")->connectToCw();
+        $product = Mage::getModel("catalog/product")->load(11);
+        echo $product->getName();
+        $stockItem =Mage::getModel('cataloginventory/stock_item')->loadByProduct($product->getEntityId());
+        var_dump($stockItem->getData());
+        $cart = Mage::getSingleton('checkout/cart');
+        $quote = $cart->getQuote();
+        echo $quote->getItemsCount()."<br/>";
+        foreach($quote->getItemsCollection() as $item){
+            echo $item->getProductId()." ";
         }
     }
 } 
