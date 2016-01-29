@@ -541,7 +541,7 @@ jQuery(document).ready(function() {
              <div>
                  <span><?php echo $this->__("Corresponding Product")?></span>
                  -
-                 <?php echo $_product->getKontentaCorrespondingProduct()?>
+                 <?php echo Mage::helper("apiplugin")->getProductById($_product->getKontentaCorrespondingProduct())->getName()?>
              </div>
          <?php endif;?>
      </div>

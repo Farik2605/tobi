@@ -23,15 +23,6 @@ class CodesWholesale_ApiPlugin_IndexController extends Mage_Core_Controller_Fron
         //$product = Mage::getModel("catalog/product")->load(2);
         //var_dump($product->getData());
         //$client = Mage::helper("apiplugin")->connectToCw();
-        $product = Mage::getModel("catalog/product")->load(11);
-        echo $product->getName();
-        $stockItem =Mage::getModel('cataloginventory/stock_item')->loadByProduct($product->getEntityId());
-        var_dump($stockItem->getData());
-        $cart = Mage::getSingleton('checkout/cart');
-        $quote = $cart->getQuote();
-        echo $quote->getItemsCount()."<br/>";
-        foreach($quote->getItemsCollection() as $item){
-            echo $item->getProductId()." ";
-        }
+        echo Mage::getModel('catalog/product')->getCollection()->getSize();
     }
 } 

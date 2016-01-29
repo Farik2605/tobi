@@ -176,6 +176,10 @@
                             <title>Manage Pin Product</title>
                             <action>pin/adminhtml_pin/pinproduct/</action>
                         </pinproduct>
+                    <pinitems>
+                        <title>Not synced products</title>
+                        <action>pin/adminhtml_pin/notsynced/</action>
+                    </pinitems>
                  </children>
             </pin>
         </menu>

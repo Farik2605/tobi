@@ -44,4 +44,10 @@
        <block type="adminhtml/template" template="hn/pin/order/view.phtml" />
    </reference> 
 </pin_adminhtml_order_view>
+
+    <pin_adminhtml_pin_notsynced>
+        <reference name="content">
+            <block type="pin/adminhtml_pin_notsynced" template="hn/pin/notsynced.phtml" />
+        </reference>
+    </pin_adminhtml_pin_notsynced>
 </layout>

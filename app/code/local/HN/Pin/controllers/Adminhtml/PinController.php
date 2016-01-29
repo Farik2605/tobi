@@ -669,4 +669,16 @@ class HN_Pin_Adminhtml_PinController extends Mage_Adminhtml_Controller_Action {
     public function confirmCorrespondingProductAction(){
         echo "hello";
     }
+
+    public function notsyncedAction(){
+        $this->_initAction();
+        $this->renderLayout();
+    }
+
+    protected function _initAction()
+    {
+        $this->loadLayout()
+            ->_setActiveMenu('pin/pinitems');
+        return $this;
+    }
 }
