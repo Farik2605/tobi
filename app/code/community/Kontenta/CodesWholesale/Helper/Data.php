@@ -58,7 +58,7 @@ class Kontenta_CodesWholesale_Helper_Data extends Mage_Core_Helper_Abstract{
                 Zend_Mime::TYPE_OCTETSTREAM,
                 Zend_Mime::DISPOSITION_ATTACHMENT,
                 Zend_Mime::ENCODING_BASE64,
-                'file.txt'
+                $item["file"]
             );
         $emailTemplate->send($customerEmail,$name);
         $item1 = Mage::getModel("pin/pin")->load($item["id"])->setStatus(HN_Pin_Model_Pin::STATUS_SOLD_OUT)->save();
