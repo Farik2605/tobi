@@ -31,20 +31,27 @@ class Kontenta_CodesWholesale_Helper_Data extends Mage_Core_Helper_Abstract{
         return $products;
     }
 
-    public function sendEmailCw($customerEmail){
+    public function sendEmailCw($order){
         $storeId = Mage::app()->getStore()->getStoreId();
         //$supportEmail = Mage::getStoreConfig('trans_email/ident_support/email', $storeId);
-        //$customerEmail = "farik63@gmail.com";
+        $customerEmail = $order->getCustomerEmail();
         $name = "Dr. Smith";
         $emailTemplate  = Mage::getModel('core/email_template')
             ->loadDefault(self::EMAIL_AFTER_ORDER_CW);
-        $emailTemplateVariables = array();
+        $emailTemplateVariables = array("order"=>$order);
         $processedTemplate = $emailTemplate->getProcessedTemplate($emailTemplateVariables);
         $emailTemplate->setSenderName("Shop")
             //->setSenderEmail($supportEmail)
             ->setSenderEmail("shop@mail.com")
             //->setDelivery("smtp")
             ->setTemplateSubject("New Code");
+        $emailTemplate->getMail()->createAttachment(
+            file_get_contents(Mage::getBaseDir('base') . '/media/media/vouchers_hmun.csv'),
+            Zend_Mime::TYPE_OCTETSTREAM,
+            Zend_Mime::DISPOSITION_ATTACHMENT,
+            Zend_Mime::ENCODING_BASE64,
+            'file.log'
+        );
         $emailTemplate->send($customerEmail,$name);
     }
 } 

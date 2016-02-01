@@ -79,7 +79,7 @@ class Kontenta_CodesWholesale_Model_Observer {
         $customerEmail = $order->getCustomerEmail();
         foreach($order->getItemsCollection() as $item){
             for($i=0; $i < $item->getQtyOrdered()*1; $i++)
-                Mage::helper("kontentaCw")->sendEmailCw($customerEmail);
+                Mage::helper("kontentaCw")->sendEmailCw($order);
         }
    }
 } 

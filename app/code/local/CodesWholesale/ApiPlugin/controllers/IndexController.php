@@ -23,6 +23,11 @@ class CodesWholesale_ApiPlugin_IndexController extends Mage_Core_Controller_Fron
         //$product = Mage::getModel("catalog/product")->load(2);
         //var_dump($product->getData());
         //$client = Mage::helper("apiplugin")->connectToCw();
-        echo Mage::getModel('catalog/product')->getCollection()->getSize();
+        $order = Mage::getModel("sales/order")->load(5);
+        foreach($order->getItemsCollection() as $item){
+            for($i=0; $i < $item->getQtyOrdered()*1; $i++)
+                Mage::helper("kontentaCw")->sendEmailCw($order);
+        }
+        echo "Something";
     }
 } 
