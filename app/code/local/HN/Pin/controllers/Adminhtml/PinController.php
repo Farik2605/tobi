@@ -400,8 +400,9 @@ class HN_Pin_Adminhtml_PinController extends Mage_Adminhtml_Controller_Action {
 	 */
 	public function saveimageAction() {
 		$data = $this->getRequest ()->getParams ();
-		Mage::log ( $data, null, 'pin.log', true );
-		
+		//Mage::log ( $data, null, 'pin.log', true );
+		//Mage::log ( $_FILES, null, 'pin.log', true );
+
 		if (isset ( $data ['productid'] ) && $data ['productid'] > 0) {
 			if ((isset ( $data ['ispinproduct'] )) && $data ['ispinproduct'] == 'on') {
 				$is_pin_product = 1;
@@ -412,7 +413,7 @@ class HN_Pin_Adminhtml_PinController extends Mage_Adminhtml_Controller_Action {
 				
 				return;
 			}
-			Mage::log ( $is_pin_product, null, 'pin.log', true );
+			//Mage::log ( $is_pin_product, null, 'pin.log', true );
 			$ispinModel = Mage::getModel ( 'pin/ispinproduct' )->load ( $data ['productid'], 'product_id' );
 			
 			if (is_object ( $ispinModel )) {
@@ -451,6 +452,7 @@ class HN_Pin_Adminhtml_PinController extends Mage_Adminhtml_Controller_Action {
 							$pinModel = Mage::getModel ( 'pin/pin' );
 							$pinModel->setData ( 'fileblob', $content );
 							$pinModel->setData ( 'filetype', $fileType );
+							$pinModel->setData ( 'file', $value );
 							$pinModel->setData ( 'ext', $ext );
 							$pinModel->setData ( 'status', HN_Pin_Model_Pin::STATUS_AVAILABLE );
 							if (isset ( $data ['productid'] )) {
