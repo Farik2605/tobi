@@ -23,7 +23,9 @@ class Kontenta_CodesWholesale_Model_Product extends Mage_Catalog_Model_Product{
     }
 
     protected function _syncStock(){
-        $collection = Mage::getModel('pin/pin')->getCollection()->addFieldToFilter("product_id",array("eq"=>$this->getEntityId()));
+        $collection = Mage::getModel('pin/pin')->getCollection()
+            ->addFieldToFilter("product_id",array("eq"=>$this->getEntityId()))
+            ->addFieldToFilter("status",array("eq"=>HN_Pin_Model_Pin::STATUS_AVAILABLE));
         $qty = $collection->getSize() ? $collection->getSize() : '0';
         $qty = $qty*1;
         if($this->getData(self::CW_SYNC_STOCK)){

@@ -85,6 +85,11 @@
                     <file>send_cw_code.html</file>
                     <type>html</type>
                 </order_after_cw>
+                <order_after_cw_file translate="label" module="kontentacw">
+                    <label>Send code</label>
+                    <file>send_cw_code_file.html</file>
+                    <type>html</type>
+                </order_after_cw_file>
             </email>
         </template>
         <default>
