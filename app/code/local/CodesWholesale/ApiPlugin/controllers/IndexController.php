@@ -23,17 +23,38 @@ class CodesWholesale_ApiPlugin_IndexController extends Mage_Core_Controller_Fron
         //$product = Mage::getModel("catalog/product")->load(2);
         //var_dump($product->getData());
         //$client = Mage::helper("apiplugin")->connectToCw();
-        $order = Mage::getModel("sales/order")->load(1);
+        /*$order = Mage::getModel("sales/order")->load(6);
         foreach($order->getItemsCollection() as $item){
             $collection = Mage::getModel('pin/pin')->getCollection()
                 ->addFieldToFilter("product_id",array("eq"=>$item->getProductId()))
                 ->addFieldToFilter("status",array("eq"=>HN_Pin_Model_Pin::STATUS_AVAILABLE))
                 ->toArray();
-            echo var_dump($collection);
-            for($i=0; $i < $item->getQtyOrdered()*1; $i++){
-                Mage::helper("kontentaCw")->sendEmailCw($order,$collection["items"][$i]);
+            //var_dump($collection);
+            $productId = $item->getProductId();
+            echo $productId;
+            $i=0;
+            foreach($collection["items"] as $it){
+                //$i++;
+                //Mage::log("I'm trying to send codes from shop".$i,null,"codes.log");
+                Mage::helper("kontentaCw")->sendEmailCwPub($order,$it);
             }
-        }
+            if($item->getQtyOrdered()*1 > $collection["totalRecords"]){
+                Mage::log("Order from API - ".($item->getQtyOrdered()*1 - $collection["totalRecords"]),null,"codes.log");
+                $product = Mage::getModel("catalog/product")->load($productId);
+                $cwProductId = $product->getData(Kontenta_CodesWholesale_Model_Product::KONTENTA_CW_PRODUCT_ID);
+                $codes = Mage::helper("apiplugin")->orderProduct($cwProductId,$item->getQtyOrdered()*1 - $collection["totalRecords"]);
+                //var_dump($codes);
+                foreach($codes as $code){
+                    Mage::helper("kontentaCw")->sendCodeFromCwEmail($order,$code);
+                    Mage::helper("kontentaCw")->setNewPin($code,$product);
+                }
+            }
+        }*/
+        $from_email = Mage::getStoreConfig('trans_email/ident_general/email'); //fetch sender email Admin
+        $from_name = Mage::getStoreConfig('trans_email/ident_general/name'); //fetch sender name Admin
+        echo $from_email;
+        echo "<br/>";
+        echo $from_name;
         echo "Something";
     }
 } 

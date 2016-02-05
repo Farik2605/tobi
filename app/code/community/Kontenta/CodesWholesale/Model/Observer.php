@@ -76,10 +76,26 @@ class Kontenta_CodesWholesale_Model_Observer {
 
    public function placeOrderAfter($observer){
         $order = $observer->getEvent()->getOrder();
-        $customerEmail = $order->getCustomerEmail();
         foreach($order->getItemsCollection() as $item){
-            for($i=0; $i < $item->getQtyOrdered()*1; $i++)
-                Mage::helper("kontentaCw")->sendEmailCw($order);
+            $productId = $item->getProductId();
+            $product = Mage::getModel("catalog/product")->load($productId);
+            $cwProductId = $product->getData(Kontenta_CodesWholesale_Model_Product::KONTENTA_CW_PRODUCT_ID);
+            if($cwProductId){
+                $collection = Mage::getModel('pin/pin')->getCollection()
+                    ->addFieldToFilter("product_id",array("eq"=>$item->getProductId()))
+                    ->addFieldToFilter("status",array("eq"=>HN_Pin_Model_Pin::STATUS_AVAILABLE))
+                    ->toArray();
+                foreach($collection["items"] as $it){
+                    Mage::helper("kontentaCw")->sendEmailCwPub($order,$it);
+                }
+                if($item->getQtyOrdered()*1 > $collection["totalRecords"]){
+                    $codes = Mage::helper("apiplugin")->orderProduct($cwProductId,$item->getQtyOrdered()*1 - $collection["totalRecords"]);
+                    foreach($codes as $code){
+                        Mage::helper("kontentaCw")->sendCodeFromCwEmail($order,$code);
+                        Mage::helper("kontentaCw")->setNewPin($code,$product);
+                    }
+                }
+            }
         }
    }
 } 
