@@ -50,11 +50,11 @@ class CodesWholesale_ApiPlugin_IndexController extends Mage_Core_Controller_Fron
                 }
             }
         }*/
-        $from_email = Mage::getStoreConfig('trans_email/ident_general/email'); //fetch sender email Admin
-        $from_name = Mage::getStoreConfig('trans_email/ident_general/name'); //fetch sender name Admin
-        echo $from_email;
-        echo "<br/>";
-        echo $from_name;
-        echo "Something";
+        $client = Mage::helper("apiplugin")->connectToCw();
+        $productOrdered = $client->receiveProductOrdered();
+        var_dump($productOrdered);
+        $productId = "ffe2274d-5469-4b0f-b57b-f8d21b09c24c";
+        $codes = Mage::helper("apiplugin")->orderProduct($productId);
+        var_dump($codes);
     }
 } 
