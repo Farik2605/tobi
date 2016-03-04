@@ -85,7 +85,9 @@ class Kontenta_CodesWholesale_Model_Observer {
                     ->addFieldToFilter("product_id",array("eq"=>$item->getProductId()))
                     ->addFieldToFilter("status",array("eq"=>HN_Pin_Model_Pin::STATUS_AVAILABLE))
                     ->toArray();
-                foreach($collection["items"] as $it){
+                //Cut array to the qty ordered
+                $resultArray = array_slice($collection["items"],0,$item->getQtyOrdered()*1);
+                foreach($resultArray as $it){
                     Mage::helper("kontentaCw")->sendEmailCwPub($order,$it);
                 }
                 if($item->getQtyOrdered()*1 > $collection["totalRecords"]){
