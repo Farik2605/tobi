@@ -100,4 +100,9 @@ class Kontenta_CodesWholesale_Model_Observer {
             }
         }
    }
+
+    public function onSaveProductAfter($observer){
+        $product = $observer->getProduct();
+        Mage::helper("kontentaCw")->synchProductQty($product);
+    }
 } 

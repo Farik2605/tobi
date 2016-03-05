@@ -24,6 +24,15 @@
                     </kontenta_codeswholesale_before_collection>
                 </observers>
             </catalog_product_collection_load_before>
+            <catalog_product_save_after>
+                <observers>
+                    <yourmodule>
+                        <type>singleton</type>
+                        <class>Kontenta_CodesWholesale_Model_Observer</class>
+                        <method>onSaveProductAfter</method>
+                    </yourmodule>
+                </observers>
+            </catalog_product_save_after>
         </events>
     </adminhtml>
     <admin>

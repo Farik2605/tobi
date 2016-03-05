@@ -492,7 +492,9 @@ class HN_Pin_Adminhtml_PinController extends Mage_Adminhtml_Controller_Action {
 			 */
 			$storeId = Mage::app ()->getStore ()->getId ();
 			$pin_is_qty_sync = Mage::getStoreConfig ( 'pin/general/qty_sync', $storeId );
-			
+            if (isset ( $data ['productid'] )) {
+                Mage::helper("kontentaCw")->synchProductIdQty($data ['productid']);
+            }
 			if ($pin_is_qty_sync == 1) {
 				if (isset ( $data ['productid'] )) {
 					$qty = Mage::helper ( 'pin' )->getQtyPINAvail ( $data ['productid'] );

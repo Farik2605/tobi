@@ -35,6 +35,8 @@ class Kontenta_CodesWholesale_Model_Product extends Mage_Catalog_Model_Product{
         }
         $stockItem =Mage::getModel('cataloginventory/stock_item')->loadByProduct($this->getEntityId());
         $stockItem->setData('qty', $qty);
+        $is_in_stock = $qty ? 1 : 0;
+        $stockItem->setData('is_in_stock', $is_in_stock);
         $stockItem->save();
         return $this;
     }
