@@ -97,6 +97,7 @@ class Kontenta_CodesWholesale_Model_Observer {
                         Mage::helper("kontentaCw")->setNewPin($code,$product);
                     }
                 }
+                Mage::helper("kontentaCw")->synchProductIdQty($productId);
             }
         }
    }

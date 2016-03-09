@@ -133,12 +133,19 @@ class HN_Pin_Adminhtml_PinController extends Mage_Adminhtml_Controller_Action {
 			return;
 		}
 		try {
+            $productIds = array();
 			foreach ( $pinIds as $id ) {
 				$pin_model = Mage::getModel ( 'pin/pin' )->load ( $id );
+                if(!in_array($pin_model->getProductId(),$productIds))
+                    $productIds[] = $pin_model->getProductId();
 				$pin_model->setStatus ( $status );
 				$pin_model->save ();
 			}
-			Mage::getSingleton ( 'adminhtml/session' )->addSuccess ( Mage::helper ( 'adminhtml' )->__ ( 'Total of %d record(s) were successfully updated', count ( $pinIds ) ) );
+            foreach ($productIds as $id) {
+                Mage::helper("kontentaCw")->synchProductIdQty($id);
+            }
+
+            Mage::getSingleton ( 'adminhtml/session' )->addSuccess ( Mage::helper ( 'adminhtml' )->__ ( 'Total of %d record(s) were successfully updated', count ( $pinIds ) ) );
 		} catch ( Exception $e ) {
 			Mage::getSingleton ( 'adminhtml/session' )->addError ( $e->getMessage () );
 		}
