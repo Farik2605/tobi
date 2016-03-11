@@ -106,4 +106,12 @@ class Kontenta_CodesWholesale_Model_Observer {
         $product = $observer->getProduct();
         Mage::helper("kontentaCw")->synchProductQty($product);
     }
+
+    public function updateProducts(){
+        $products = Mage::getModel("catalog/product")->getCollection();
+        foreach($products as $product){
+            Mage::log($product->getId(),null,"tobiascron.log");
+            Mage::helper("kontentaCw")->synchProductIdQty($product->getId());
+        }
+    }
 } 

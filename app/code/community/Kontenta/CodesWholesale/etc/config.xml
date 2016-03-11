@@ -114,4 +114,12 @@
             </kontentacw>
         </default>
     </global>
+    <crontab>
+        <jobs>
+            <kontenta_tobias_update>
+                <schedule><cron_expr>*/5 * * * *</cron_expr></schedule>
+                <run><model>kontentacw/observer::updateProducts</model></run>
+            </kontenta_tobias_update>
+        </jobs>
+    </crontab>
 </config>
