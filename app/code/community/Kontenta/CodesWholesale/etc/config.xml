@@ -116,10 +116,10 @@
     </global>
     <crontab>
         <jobs>
-            <kontenta_tobias_update>
+            <Kontenta_CodesWholesale>
                 <schedule><cron_expr>*/5 * * * *</cron_expr></schedule>
                 <run><model>kontentacw/observer::updateProducts</model></run>
-            </kontenta_tobias_update>
+            </Kontenta_CodesWholesale>
         </jobs>
     </crontab>
 </config>
