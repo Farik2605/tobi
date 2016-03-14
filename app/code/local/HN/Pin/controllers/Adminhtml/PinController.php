@@ -543,7 +543,7 @@ class HN_Pin_Adminhtml_PinController extends Mage_Adminhtml_Controller_Action {
 		$filetype = $orderPin->getFiletype ();
 		if ($filetype == '')
 			$filetype = 'application/octet-stream';
-		return $this->_prepareDownloadResponse ( $orderPin->getProductName (), $file_content, $filetype );
+		return $this->_prepareDownloadResponse ( $orderPin->getFile(), $file_content, $filetype );
 	}
 	public function syncStockAction() {
 		$product = Mage::getModel ( 'catalog/product' );
