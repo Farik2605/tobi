@@ -60,7 +60,7 @@ class Kontenta_CodesWholesale_Helper_Data extends Mage_Core_Helper_Abstract{
             ->setTemplateSubject("New Code");
         if($fileblob)
             $emailTemplate->getMail()->createAttachment(
-                base64_decode($fileblob),
+                $fileblob,
                 Zend_Mime::TYPE_OCTETSTREAM,
                 Zend_Mime::DISPOSITION_ATTACHMENT,
                 Zend_Mime::ENCODING_BASE64,
