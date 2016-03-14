@@ -114,11 +114,12 @@ class Kontenta_CodesWholesale_Helper_Data extends Mage_Core_Helper_Abstract{
     }
 
     public function synchProductIdQty($productId){
-        $this->_synchProd($productId);
+        return $this->_synchProd($productId);
     }
 
     protected function _synchProd($productId){
         $product = Mage::getModel("kontentacw/product")->load($productId);
         $product->synchronize();
+        return $product;
     }
 } 
