@@ -294,7 +294,6 @@ class HN_Pin_Adminhtml_PinController extends Mage_Adminhtml_Controller_Action {
 			
 			// /////////////////
 			if (isset ( $_FILES ['imgzip'] ['name'] ) && $_FILES ['imgzip'] ['name'] != '') {
-				
 				/**
 				 * upload file to a folder
 				 */
@@ -318,7 +317,26 @@ class HN_Pin_Adminhtml_PinController extends Mage_Adminhtml_Controller_Action {
 					/**
 					 */
 					$zip = new ZipArchive ();
-					if ($zip->open ( $fileName ) === TRUE) {
+                    if ($zip->open ( $fileName ) === TRUE){
+                        $fileType = pathinfo ($fileName, PATHINFO_EXTENSION );
+                        $pinModel = Mage::getModel ( 'pin/pin' );
+                        $fp = fopen ( $fileName, 'r' );
+                        $content = fread ( $fp, filesize ( $fileName) );
+                        $pinModel->setData ( 'fileblob', $content );
+                        $pinModel->setData ( 'filetype', $fileType );
+                        $pinModel->setData ( 'file', $zipName );
+                        $pinModel->setData ( 'status', HN_Pin_Model_Pin::STATUS_AVAILABLE );
+                        if (isset ( $data ['productid'] )) {
+                            $productModel = Mage::getModel ( 'catalog/product' )->load ( $data ['productid'] );
+                            $pinModel->setData ( 'product_id', $data ['productid'] );
+                            //$pinModel->setData ( 'invoice_id', $data ['pin_invoice_id'] );
+                            $pinModel->setData ( 'product_name', $productName = $productModel->getName () );
+                        }
+
+                        $pinModel->save ();
+                    }
+					//if ($zip->open ( $fileName ) === TRUE) {
+					if (false) {
 						$zip->extractTo ( $importReadyDir );
 						$zip->close ();
 						
@@ -330,15 +348,15 @@ class HN_Pin_Adminhtml_PinController extends Mage_Adminhtml_Controller_Action {
 						// delete the zip file
 						if (is_file ( $fileName ))
 							unlink ( $fileName );
-						
-						if (is_dir ( $fileNameWithoutZip )) {
+						//if (is_dir ( $fileNameWithoutZip )) {
+                        if(!is_dir($fileNameWithoutZip))
+                            mkdir($fileNameWithoutZip);
 							if ($dh = opendir ( $fileNameWithoutZip )) {
 								while ( ($file = readdir ( $dh )) !== false ) {
 									echo "filename: " . $file;
 									
 									/**
 									 */
-									
 									$fp = fopen ( $fileNameWithoutZip . DS . $file, 'r' );
 									$content = fread ( $fp, filesize ( $fileNameWithoutZip . DS . $file ) );
 									
@@ -371,7 +389,7 @@ class HN_Pin_Adminhtml_PinController extends Mage_Adminhtml_Controller_Action {
 								}
 								closedir ( $dh );
 							}
-						}
+						//}
 					/**
 					 */
 					} else {

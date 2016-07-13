@@ -15,8 +15,8 @@ $checked = null;
        
 <!--  -->
 <form method="POST" action="<?php echo $this->getUrl('pin/adminhtml_pin/savezip') ?>" enctype="multipart/form-data" id="product_pin">
-<input type="hidden" name="form_key" value="<? echo $this->getFormKey(); ?>" />  
-<input type="hidden" name="productid" value="<? echo $_GET['productid'] ?>" />  
+<input type="hidden" name="form_key" value="<?php echo $this->getFormKey(); ?>" />
+<input type="hidden" name="productid" value="<?php echo $_GET['productid'] ?>" />
 
 <table id="image_pin_tbl">
 <tr>
