@@ -100,6 +100,12 @@ class Kontenta_CodesWholesale_Model_Observer {
                 Mage::helper("kontentaCw")->synchProductIdQty($productId);
             }
         }
+       if($order->canInvoice()){
+           $this->_invoiceOrder($order);
+       }
+       if($order->canShip()){
+           $this->_shipOrder($order);
+       }
    }
 
     public function onSaveProductAfter($observer){
@@ -110,9 +116,34 @@ class Kontenta_CodesWholesale_Model_Observer {
     public function updateProducts(){
         $products = Mage::getModel("catalog/product")->getCollection();
         foreach($products as $product){
-            Mage::log($product->getId(),null,"tobiascron.log");
             $pr = Mage::helper("kontentaCw")->synchProductIdQty($product->getId());
             $pr->save();
+        }
+    }
+
+    protected function _shipOrder(Mage_Sales_Model_Order $order){
+        $itemQty =  $order->getItemsCollection()->count();
+        $shipment = Mage::getModel('sales/service_order', $order)->prepareShipment($itemQty);
+        $shipment = new Mage_Sales_Model_Order_Shipment_Api();
+        $shipmentId = $shipment->create($order->getIncrementId());
+    }
+
+    protected function _invoiceOrder(Mage_Sales_Model_Order $order){
+        try{
+            $invoice = Mage::getModel('sales/service_order', $order)->prepareInvoice();
+            if ($invoice->getTotalQty()) {
+                $invoice->setRequestedCaptureCase(
+                    Mage_Sales_Model_Order_Invoice::CAPTURE_OFFLINE
+                );
+                $invoice->register();
+                $transactionSave = Mage::getModel('core/resource_transaction')
+                    ->addObject($invoice)
+                    ->addObject($invoice->getOrder());
+
+                $transactionSave->save();
+            }
+        } catch(Mage_Core_Exception $e){
+            Mage::log($e->getMessage(),null,"kontenta_exception.log");
         }
     }
 } 
